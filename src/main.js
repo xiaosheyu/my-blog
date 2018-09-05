@@ -10,7 +10,6 @@ import './utils/filter_utils.js'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

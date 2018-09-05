@@ -15,7 +15,7 @@
   </el-form>
 </template>
 <script>
-  import {postRequest} from '../utils/api'
+  import { post } from '../utils/api'
   import { valid } from 'semver';
   export default{
     data(){
@@ -40,7 +40,7 @@
             return;
           }  
           this.loading = true;
-          postRequest('/login', {
+          post('/v1/login', {
             username: this.loginForm.username,
             password: this.loginForm.password
           }).then(resp=> {
@@ -48,6 +48,7 @@
             if (resp.status == 200) {
               //成功
               var json = resp.data;
+              console.log(json)
               if (json.status == 'success') {
                 _this.$router.replace({path: '/home'});
               } else {

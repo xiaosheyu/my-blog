@@ -1,21 +1,16 @@
 import axios from 'axios'
 
-let base = '';
-export const postRequest = (url, params) => {
+if (process.env.NODE_ENV == 'development') {
+  axios.defaults.baseURL = 'http://localhost:8080';
+}
+
+export const post = (url, params) => {
   return axios({
     method: 'post',
-    url: `${base}${url}`,
+    url: `${url}`,
     data: params,
-    transformRequest: [function (data) {
-      // Do whatever you want to transform the data
-      let ret = ''
-      for (let it in data) {
-        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-      }
-      return ret
-    }],
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/json'
     }
   });
 }
