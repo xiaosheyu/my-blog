@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:8080';
+var dev = "http://localhost:8080/";
+var prod = "https://www.shownspace.cn/";
+console.log(process.env.NODE_ENV)
+axios.defaults.baseURL = "development" === process.env.NODE_ENV ? dev : prod;
 
 export const post = (url, params) => {
   return axios({

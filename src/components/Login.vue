@@ -40,7 +40,7 @@
             return;
           }  
           this.loading = true;
-          post('/api/v1/login', {
+          post('/v1/login', {
             username: this.loginForm.username,
             password: this.loginForm.password
           }).then(resp=> {
