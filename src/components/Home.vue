@@ -1,12 +1,16 @@
 <template>
-  <h1>{{currentUserName}}</h1>
+  <div>
+    <h1>欢迎你：{{currentUser}}</h1>
+    <img :src='avatar' />
+  </div>
 </template>
 <script>
-  import {getRequest} from '../utils/api'
+  import { post, get } from '../utils/api'
   export default{
     data(){
       return {
-        currentUserName: '游客'
+        currentUser: sessionStorage.getItem('user'),
+        avatar: sessionStorage.avatar
       }
     }
   }

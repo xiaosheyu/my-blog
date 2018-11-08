@@ -1,10 +1,5 @@
 import axios from 'axios'
 
-var dev = "http://localhost:8080/";
-var prod = "https://www.shownspace.cn/";
-console.log(process.env.NODE_ENV)
-axios.defaults.baseURL = "development" === process.env.NODE_ENV ? dev : prod;
-
 export const post = (url, params) => {
   return axios({
     method: 'post',
@@ -15,6 +10,25 @@ export const post = (url, params) => {
     }
   });
 }
+
+export const get = (url, params) => {
+  return axios({
+    method: 'get',
+    url: `${url}`,
+    data:params,
+    transformRequest: [function (data) {
+      let ret = ''
+      for (let it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }],
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+}
+
 export const uploadFileRequest = (url, params) => {
   return axios({
     method: 'post',
@@ -62,6 +76,6 @@ export const getRequest = (url,params) => {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    url: `${base}${url}`
+    url: `${url}`
   });
 }

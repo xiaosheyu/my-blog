@@ -8,14 +8,18 @@
     <el-form-item prop="password">
       <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
-    <el-checkbox class="login_remember" v-model="checked" label-position="left">记住密码</el-checkbox>
+    <!-- <el-button plain type="info" style="margin-bottom:10px" @click="loginByGithub">Github</el-button> -->
+    <!-- <a href="http://localhost:8080/v1/login/github" > -->
+      <div class='github' style="background-image:url(../../../static/img/github.png);" @click="githubLogin">
+      </div>
+    <!-- </a> -->
     <el-form-item style="width: 100%">
       <el-button type="primary" @click.native.prevent="submitClick('loginForm')" style="width: 100%">登录</el-button>
     </el-form-item>
   </el-form>
 </template>
 <script>
-  import { post } from '../utils/api'
+  import { post, get } from '../utils/api'
   import { valid } from 'semver';
   export default{
     data(){
@@ -33,6 +37,9 @@
       }
     },
     methods: {
+      githubLogin: () => {
+        window.location.href = 'http://localhost:8080/v1/login/github'
+      },
       submitClick: function (formName) {
         var _this = this;
         _this.$refs[formName].validate(valid => {
@@ -40,7 +47,7 @@
             return;
           }  
           this.loading = true;
-          post('/v1/login', {
+          post('/api/v1/login', {
             username: this.loginForm.username,
             password: this.loginForm.password
           }).then(resp=> {
@@ -48,11 +55,11 @@
             if (resp.status == 200) {
               //成功
               var json = resp.data;
-              console.log(json)
               if (json.status == 'success') {
+                sessionStorage.setItem('user_name', json.data)
                 _this.$router.replace({path: '/home'});
               } else {
-                _this.$alert('登录失败!', '失败!');
+                _this.$alert('登录失败!', resp.message);
               }
             } else {
               //失败
@@ -88,5 +95,15 @@
   .login_remember {
     margin: 0px 0px 35px 0px;
     text-align: left;
+  }
+
+  .github {
+    width: 35px;
+    height:35px; 
+    margin-left: 156px;
+    margin-bottom: 10px;
+    background-repeat:no-repeat; 
+    background-size:100% 100%;
+    cursor: pointer;
   }
 </style>
