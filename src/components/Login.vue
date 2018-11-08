@@ -35,7 +35,7 @@
     },
     methods: {
       githubLogin: () => {
-        window.location.href = 'http://localhost:8080/v1/login/github'
+        window.location.href = '/v1/login/github'
       },
       submitClick: function (formName) {
         var _this = this;
