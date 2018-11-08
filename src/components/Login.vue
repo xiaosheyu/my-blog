@@ -8,11 +8,8 @@
     <el-form-item prop="password">
       <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
-    <!-- <el-button plain type="info" style="margin-bottom:10px" @click="loginByGithub">Github</el-button> -->
-    <!-- <a href="http://localhost:8080/v1/login/github" > -->
-      <div class='github' style="background-image:url(../../../static/img/github.png);" @click="githubLogin">
-      </div>
-    <!-- </a> -->
+    <div class='github' style="background-image:url(../../../static/img/github.png);" @click="githubLogin">
+    </div>
     <el-form-item style="width: 100%">
       <el-button type="primary" @click.native.prevent="submitClick('loginForm')" style="width: 100%">登录</el-button>
     </el-form-item>
@@ -47,7 +44,7 @@
             return;
           }  
           this.loading = true;
-          post('/api/v1/login', {
+          post('/v1/login', {
             username: this.loginForm.username,
             password: this.loginForm.password
           }).then(resp=> {

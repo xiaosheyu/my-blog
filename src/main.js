@@ -52,7 +52,7 @@ Vue.prototype.$http = axios;
 router.beforeEach((to, from, next) =>{
   if(!!!sessionStorage.user) {
     var query = 'token=' + (to.query.token ? to.query.token : '');
-    get("/api/v1/user/info?" + query, null).then(resp =>{
+    get("/v1/user/info?" + query, null).then(resp =>{
       if(resp.data.data) {
         sessionStorage.setItem("user", resp.data.data.userAuthentication.details.name);
         sessionStorage.setItem("avatar", resp.data.data.userAuthentication.details.avatar_url)
